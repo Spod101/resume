@@ -180,3 +180,40 @@
 .marquee-text:hover .marquee-dot {
   color: black;
 }
+
+/* Hide cursor in projects section on desktop */
+@media (min-width: 1024px) {
+  .projects-section,
+  .projects-section * {
+    cursor: none !important;
+  }
+  
+  /* Show cursor on interactive elements */
+  .projects-section .interactive-content {
+    cursor: pointer !important;
+  }
+}
+
+/* Custom Scrollbar - Hidden but functional */
+.custom-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Glassmorphism effect */
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+}
+
+.glass-overlay {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(30px) saturate(180%);
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+}

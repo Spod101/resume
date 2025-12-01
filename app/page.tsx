@@ -9,7 +9,7 @@ import { Footer } from '@/components/footer'
 
 export default function Home() {
   const [scrollY, setScrollY] = useState(0)
-  const [hackText, setHackText] = useState('Clayton Dale Tambis')
+  const [hackText, setHackText] = useState('Clayton Dale')
   const [isHacking, setIsHacking] = useState(false)
   const [showScrollTop, setShowScrollTop] = useState(false)
 
@@ -31,7 +31,7 @@ export default function Home() {
     if (isHacking) return
     setIsHacking(true)
     
-    const originalText = 'Clayton Dale Tambis'
+    const originalText = 'Clayton Dale'
     const chars = '01!@#$%^&*(){}[]<>?/\\|~`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
     let iterations = 0
     
@@ -61,7 +61,7 @@ export default function Home() {
 
   const resetText = () => {
     if (!isHacking) {
-      setHackText('Clayton Dale Tambis')
+      setHackText('Clayton Dale')
     }
   }
 
