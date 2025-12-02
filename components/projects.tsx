@@ -31,31 +31,45 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: "AI Chatbot Platform",
-    description: "An intelligent conversational AI platform built with Next.js and OpenAI API, featuring context-aware responses and user memory.",
-    fullDescription: "A platform designed for businesses to deploy intelligent chatbots with context-aware conversations, user memory, and seamless integration with existing systems.",
-    tech: ["Next.js", "OpenAI", "TypeScript", "Supabase"],
-    features: [
-      "Context-aware AI responses using GPT-4",
-      "Persistent user conversation memory",
-      "Real-time chat with WebSocket integration",
-      "Multi-language support for global reach"
+    "title": "EternalpEASE",
+    "description": "A conversational AI platform that translates user inquiries into personalized visual theme recommendations, featuring integrated payments.",
+    "fullDescription": "EternalpEASE is an intelligent conversational partner designed to bridge the gap between abstract ideas and concrete visual concepts. It functions as an adaptive AI assistant that uses deep context-aware reasoning to understand user aesthetic preferences. Beyond simple text, it dynamically generates visual theme recommendations and imagery using DALL-E, while allowing users to purchase premium themes or assets directly through a secure PayMongo integration.",
+    "tech": [
+      "Laravel (Backend API & Orchestration)",
+      "React (Frontend Interface)",
+      "OpenAI API (GPT-4 & DALL-E 3)",
+      "PayMongo (Payment Processing)",
+      "Supabase (Database)"
     ],
-    challenges: [
+    "features": [
+      "Context-aware conversational flow powered by GPT models",
+      "Real-time visual theme generation using DALL-E 3",
+      "React-based interactive chat interface with optimistic UI updates",
+      "Secure payment processing for premium assets via PayMongo",
+      "Persistent aesthetic memory allowing the AI to recall user style",
+      "Hybrid data architecture syncing Laravel backend state with React frontend",
+      "Webhook-driven order fulfillment and status updates",
+      "Admin dashboard for tracking token usage and sales analytics"
+    ],
+    "challenges": [
       {
-        title: "Token Management & Cost Optimization",
-        description: "Implementing efficient token counting and context window management to optimize API costs while maintaining conversation quality."
+        "title": "Strategic Token & Cost Optimization",
+        "description": "Implementing aggressive token conservation strategies to manage OpenAI costs. This involves designing efficient system prompts, caching frequent responses, and programmatically deciding when to use cheaper models (GPT-3.5) versus expensive reasoning models (GPT-4) without degrading the user experience."
       },
       {
-        title: "Real-Time State Synchronization",
-        description: "Managing real-time updates across multiple chat sessions while handling edge cases like network interruptions and reconnections."
+        "title": "Hybrid State Synchronization (Laravel & React)",
+        "description": "Orchestrating seamless data flow between the Laravel backend and React frontend. The challenge lies in managing asynchronous API calls, ensuring type safety across the stack, and keeping the client-side UI in perfect sync with the server-side database, particularly during complex chat-and-generate sequences."
+      },
+      {
+        "title": "Complex Payment Intent Integration",
+        "description": "Architecting a robust payment flow using PayMongo's API. This requires handling the asynchronous 'Payment Intent' lifecycle—from creating intents and attaching payment methods to securely verifying webhooks—ensuring that premium features unlock immediately and reliably upon successful payment."
       }
     ],
-    demo: "#",
+    demo: "eternalpease.xyz",
     github: "#",
-    year: "2024",
-    image: "PROJECT_1",
-    gallery: ["/placeholder.jpg", "/placeholder.jpg", "/placeholder.jpg"]
+    year: "2025",
+    image: "/images/project1/thumbnail.png",
+    gallery: ["/images/project1/1.png", "/images/project1/2.png", "/images/project1/3.png", "/images/project1/4.png", "/images/project1/5.png"]
   },
   {
     title: "Workflow Automation Suite",
@@ -219,7 +233,7 @@ function StackedCardsGallery({ images }: { images: string[] }) {
 
   return (
     <>
-      <div className="relative w-full h-[250px] sm:h-[300px] md:h-[400px] mb-6 sm:mb-8">
+      <div className="relative w-full aspect-[16/9] mb-6 sm:mb-8">
         <div 
           className="relative w-full h-full" 
           onClick={openLightbox}
@@ -571,16 +585,6 @@ export function Projects() {
     setIsModalOpen(true)
   }
 
-  const getPlaceholderColor = (identifier: string) => {
-    const colors = {
-      'PROJECT_1': 'from-blue-500 to-purple-500',
-      'PROJECT_2': 'from-green-500 to-teal-500',
-      'PROJECT_3': 'from-orange-500 to-red-500',
-      'PROJECT_4': 'from-pink-500 to-rose-500',
-    }
-    return colors[identifier as keyof typeof colors] || 'from-gray-500 to-gray-700'
-  }
-
   return (
     <section ref={containerRef} className="projects-section relative py-16 md:py-24 overflow-hidden">
       <motion.div
@@ -608,15 +612,12 @@ export function Projects() {
               ? 'glassmorphism border-white/40' 
               : 'border-foreground/20 bg-white'
           }`}>
-            <div className={`absolute inset-0 bg-gradient-to-br ${getPlaceholderColor(hoveredImage)} flex items-center justify-center transition-all duration-300 ${
-              isOverInteractive ? 'opacity-40' : 'opacity-100'
-            }`}>
-              <div className="text-center text-white">
-                <div className="text-8xl font-bold mb-4">{hoveredImage.split('_')[1]}</div>
-                <div className="text-2xl font-mono tracking-widest opacity-80">{hoveredImage}</div>
-                <div className="mt-8 text-sm opacity-60">Replace with actual image</div>
-              </div>
-            </div>
+            <Image
+              src={hoveredImage}
+              alt="Project preview"
+              fill
+              className="object-cover"
+            />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             
             {isOverInteractive && (
