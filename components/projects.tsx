@@ -154,9 +154,10 @@ function Lightbox({ image, onClose }: { image: string; onClose: () => void }) {
     >
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all"
+        className="absolute top-4 right-4 p-2 sm:p-3 rounded-full bg-white/10 active:bg-white/30 hover:bg-white/20 text-white transition-all touch-manipulation"
+        aria-label="Close"
       >
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="sm:w-6 sm:h-6">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
@@ -183,6 +184,8 @@ function Lightbox({ image, onClose }: { image: string; onClose: () => void }) {
 function StackedCardsGallery({ images }: { images: string[] }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [lightboxImage, setLightboxImage] = useState<string | null>(null)
+  const [touchStart, setTouchStart] = useState(0)
+  const [touchEnd, setTouchEnd] = useState(0)
 
   const nextImage = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length)
@@ -192,16 +195,44 @@ function StackedCardsGallery({ images }: { images: string[] }) {
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)
   }
 
-  const openLightbox = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).tagName !== 'BUTTON') {
+  const openLightbox = (e: React.MouseEvent | React.TouchEvent) => {
+    const target = e.target as HTMLElement
+    if (target.tagName !== 'BUTTON' && !target.closest('button')) {
       setLightboxImage(images[currentIndex])
+    }
+  }
+
+  // Touch swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX)
+  }
+
+  const handleTouchEnd = () => {
+    if (touchStart - touchEnd > 50) {
+      // Swiped left
+      nextImage()
+    }
+
+    if (touchStart - touchEnd < -50) {
+      // Swiped right
+      prevImage()
     }
   }
 
   return (
     <>
-      <div className="relative w-full h-[300px] md:h-[400px] mb-8">
-        <div className="relative w-full h-full" onClick={openLightbox}>
+      <div className="relative w-full h-[250px] sm:h-[300px] md:h-[400px] mb-6 sm:mb-8">
+        <div 
+          className="relative w-full h-full" 
+          onClick={openLightbox}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
           {/* Stacked cards effect - show 3 cards */}
           {images.map((image, index) => {
             const offset = (index - currentIndex + images.length) % images.length
@@ -210,12 +241,12 @@ function StackedCardsGallery({ images }: { images: string[] }) {
             return (
               <motion.div
                 key={index}
-                className="absolute inset-0 cursor-pointer"
+                className="absolute inset-0 cursor-pointer touch-none"
                 initial={false}
                 animate={{
                   scale: 1 - offset * 0.05,
-                  y: offset * 15,
-                  x: offset * 10,
+                  y: offset * 12,
+                  x: offset * 8,
                   opacity: offset === 0 ? 1 : 0.5,
                   zIndex: 10 - offset,
                 }}
@@ -240,17 +271,19 @@ function StackedCardsGallery({ images }: { images: string[] }) {
         {/* Navigation Arrows */}
         <button
           onClick={prevImage}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/50 hover:bg-black/70 text-white transition-all backdrop-blur-sm"
+          className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 rounded-full bg-black/60 active:bg-black/80 hover:bg-black/70 text-white transition-all backdrop-blur-sm touch-manipulation"
+          aria-label="Previous image"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="sm:w-6 sm:h-6">
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
         </button>
         <button
           onClick={nextImage}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/50 hover:bg-black/70 text-white transition-all backdrop-blur-sm"
+          className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 p-2 sm:p-3 rounded-full bg-black/60 active:bg-black/80 hover:bg-black/70 text-white transition-all backdrop-blur-sm touch-manipulation"
+          aria-label="Next image"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="sm:w-6 sm:h-6">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </button>
@@ -274,23 +307,25 @@ function ProjectModal({ project, open, onOpenChange }: {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent 
-        className="max-w-4xl max-h-[90vh] bg-transparent border-none p-0 gap-0 overflow-hidden"
+        className="max-w-4xl max-h-[95vh] sm:max-h-[90vh] bg-transparent border-none p-0 gap-0 overflow-hidden w-[95vw] sm:w-full"
         showCloseButton={false}
       >
         {/* Custom Close Button */}
         <button
           onClick={() => onOpenChange(false)}
-          className="absolute top-4 right-4 z-50 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all duration-200 backdrop-blur-sm border border-white/20"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 z-50 p-2 sm:p-2.5 rounded-full bg-white/10 active:bg-white/30 hover:bg-white/20 text-white transition-all duration-200 backdrop-blur-sm border border-white/20 touch-manipulation"
+          aria-label="Close modal"
         >
           <svg 
-            width="20" 
-            height="20" 
+            width="18" 
+            height="18" 
             viewBox="0 0 24 24" 
             fill="none" 
             stroke="currentColor" 
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
+            className="sm:w-5 sm:h-5"
           >
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -298,38 +333,38 @@ function ProjectModal({ project, open, onOpenChange }: {
         </button>
 
         {/* Scrollable Container with Custom Scrollbar */}
-        <div className="max-h-[90vh] overflow-y-auto custom-scrollbar">
+        <div className="max-h-[95vh] sm:max-h-[90vh] overflow-y-auto custom-scrollbar">
           <SpotlightCard 
-            className="w-full"
+            className="w-full !p-4 sm:!p-6 md:!p-8"
             spotlightColor="rgba(255, 255, 255, 0.15)"
           >
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {/* Stacked Cards Gallery */}
             {project.gallery && project.gallery.length > 0 && (
               <StackedCardsGallery images={project.gallery} />
             )}
 
             {/* Header */}
-            <div className="space-y-4 pb-6 border-b border-white/10">
-              <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+            <div className="space-y-3 sm:space-y-4 pb-4 sm:pb-6 border-b border-white/10">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white tracking-tight">
                 {project.title}
               </h2>
-              <p className="text-gray-300 text-base leading-relaxed">
+              <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
                 {project.fullDescription}
               </p>
             </div>
 
             {/* Tech Stack */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-1 h-5 bg-white/80"></div>
-                <h3 className="text-sm font-semibold text-white/60 uppercase tracking-wider">Technology Stack</h3>
+            <div className="space-y-2 sm:space-y-3">
+              <div className="flex items-center gap-2 mb-2 sm:mb-3">
+                <div className="w-1 h-4 sm:h-5 bg-white/80"></div>
+                <h3 className="text-xs sm:text-sm font-semibold text-white/60 uppercase tracking-wider">Technology Stack</h3>
               </div>
               <div className="flex flex-wrap gap-2">
                 {project.tech.map((tech, i) => (
                   <span 
                     key={i}
-                    className="font-mono text-xs px-4 py-2 bg-white/10 border border-white/20 text-white/90 rounded hover:bg-white/15 hover:border-white/30 transition-all"
+                    className="font-mono text-xs px-3 py-1.5 sm:px-4 sm:py-2 bg-white/10 border border-white/20 text-white/90 rounded active:bg-white/20 hover:bg-white/15 hover:border-white/30 transition-all touch-manipulation"
                   >
                     {tech}
                   </span>
@@ -338,14 +373,14 @@ function ProjectModal({ project, open, onOpenChange }: {
             </div>
 
             {/* Features */}
-            <div className="bg-white/5 p-6 rounded-lg border border-white/10">
-              <h3 className="text-xl font-bold mb-5 flex items-center gap-2 text-white">
-                <span className="text-2xl">+</span> Key Features
+            <div className="bg-white/5 p-4 sm:p-6 rounded-lg border border-white/10">
+              <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-5 flex items-center gap-2 text-white">
+                <span className="text-xl sm:text-2xl">+</span> Key Features
               </h3>
-              <ul className="space-y-4">
+              <ul className="space-y-3 sm:space-y-4">
                 {project.features.map((feature, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-gray-300">
-                    <span className="text-white mt-0.5 flex-shrink-0 text-lg font-bold">+</span>
+                  <li key={i} className="flex items-start gap-2 sm:gap-3 text-xs sm:text-sm text-gray-300">
+                    <span className="text-white mt-0.5 flex-shrink-0 text-base sm:text-lg font-bold">+</span>
                     <span className="leading-relaxed">{feature}</span>
                   </li>
                 ))}
@@ -353,16 +388,16 @@ function ProjectModal({ project, open, onOpenChange }: {
             </div>
 
             {/* Challenges & Learnings */}
-            <div className="space-y-5">
+            <div className="space-y-4 sm:space-y-5">
               <div className="flex items-center gap-2">
-                <div className="w-1 h-5 bg-white/80"></div>
-                <h3 className="text-xl font-bold text-white">Challenges & Learnings</h3>
+                <div className="w-1 h-4 sm:h-5 bg-white/80"></div>
+                <h3 className="text-lg sm:text-xl font-bold text-white">Challenges & Learnings</h3>
               </div>
-              <div className="space-y-6 pl-4">
+              <div className="space-y-4 sm:space-y-6 pl-3 sm:pl-4">
                 {project.challenges.map((challenge, i) => (
-                  <div key={i} className="space-y-2 border-l-2 border-white/20 pl-4 hover:border-white/40 transition-colors">
-                    <h4 className="font-bold text-white text-base">{challenge.title}</h4>
-                    <p className="text-sm text-gray-400 leading-relaxed">
+                  <div key={i} className="space-y-2 border-l-2 border-white/20 pl-3 sm:pl-4 active:border-white/40 hover:border-white/40 transition-colors">
+                    <h4 className="font-bold text-white text-sm sm:text-base">{challenge.title}</h4>
+                    <p className="text-xs sm:text-sm text-gray-400 leading-relaxed">
                       {challenge.description}
                     </p>
                   </div>
@@ -371,14 +406,14 @@ function ProjectModal({ project, open, onOpenChange }: {
             </div>
 
             {/* Links */}
-            <div className="flex flex-wrap gap-4 pt-6 border-t border-white/10">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-white/10">
               {project.demo && (
                 <Link
                   href={project.demo}
-                  className="flex items-center gap-2 px-6 py-3 bg-white text-black font-semibold hover:bg-white/90 transition-all rounded"
+                  className="flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-black font-semibold active:bg-white/80 hover:bg-white/90 transition-all rounded touch-manipulation text-sm sm:text-base"
                   target="_blank"
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="sm:w-5 sm:h-5">
                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                     <polyline points="15 3 21 3 21 9"></polyline>
                     <line x1="10" y1="14" x2="21" y2="3"></line>
@@ -389,10 +424,10 @@ function ProjectModal({ project, open, onOpenChange }: {
               {project.github && (
                 <Link
                   href={project.github}
-                  className="flex items-center gap-2 px-6 py-3 border border-white/20 text-white font-semibold hover:bg-white/10 transition-all rounded"
+                  className="flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 border border-white/20 text-white font-semibold active:bg-white/20 hover:bg-white/10 transition-all rounded touch-manipulation text-sm sm:text-base"
                   target="_blank"
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="sm:w-5 sm:h-5">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                   </svg>
                   View Code
