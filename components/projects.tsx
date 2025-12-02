@@ -70,62 +70,133 @@ const projects: Project[] = [
     github: "#",
     year: "2025",
     image: "/images/project1/thumbnail.png",
-    gallery: ["/images/project1/1.png", "/images/project1/2.png", "/images/project1/3.png", "/images/project1/4.png", "/images/project1/5.png"]
+    gallery: ["/images/project1/1.png", "/images/project1/2.png", "/images/project1/3.png", "/images/project1/4.png", "/images/project1/5.png"
+    ]
   },
   {
-    title: "Workflow Automation Suite",
-    description: "Custom automation workflows using N8N for streamlining business processes and integrating multiple services seamlessly.",
-    fullDescription: "An automation platform built to streamline business processes by connecting multiple services and creating custom workflows without code.",
-    tech: ["N8N", "Google Cloud", "Node.js", "API Integration"],
-    features: [
-      "Visual workflow builder with drag-and-drop interface",
-      "Integration with 200+ services and APIs",
-      "Automated task scheduling and triggers",
-      "Real-time monitoring and error handling"
+    "title": "AI-Powered Personalized Email Automation via Telegram",
+    "description": "A Telegram chatbot and AI-driven workflow that generates professional, tailored emails from brief user inputs and sends them automatically.",
+    "fullDescription": "This project combines n8n, AI, and Telegram to automate professional email composition and delivery. Users interact with a Telegram chatbot by providing minimal inputs—the recipient's name, email address, subject, and a short context. The AI then constructs a formal, detailed email based on the provided context. Users can review the generated email and either approve it for sending or request a reconstruction. Sent emails are stored in Supabase, enabling the AI to learn the user's style over time for increasingly personalized outputs. This project showcases practical experience in workflow automation, AI integration, prompt engineering, API management, and chatbot development.",
+    "tech": ["n8n", "Telegram Bot API", "Google AI API", "Email API", "Supabase", "Docker", "JavaScript", "JSON"],
+    "features": [
+      "Telegram chatbot interface for user input",
+      "AI-powered email drafting from minimal context",
+      "User review and approval before sending",
+      "Automatic sending via email API",
+      "Storage of sent emails for AI learning and personalization",
+      "Self-hosted n8n workflows using Docker",
+      "Scalable and reusable automation pipelines"
     ],
-    challenges: [
+    "challenges": [
       {
-        title: "Complex API Integrations",
-        description: "Managing authentication flows and rate limits across multiple third-party services while ensuring data consistency."
+        "title": "Prompt Engineering",
+        "description": "Crafting AI prompts that produce professional, contextually accurate, and personalized emails from minimal input."
       },
       {
-        title: "Workflow Error Recovery",
-        description: "Implementing robust error handling and retry mechanisms to ensure workflows complete successfully even with partial failures."
+        "title": "Token and API Management",
+        "description": "Handling Google AI API requests efficiently while staying within token limits and managing multiple API calls in n8n."
+      },
+      {
+        "title": "Telegram Bot Development",
+        "description": "Designing an interactive chatbot that collects user input, handles responses, and integrates seamlessly with n8n workflows."
+      },
+      {
+        "title": "Workflow Automation and Review Logic",
+        "description": "Creating conditional paths in n8n to allow email review, reconstruction, or approval before sending."
+      },
+      {
+        "title": "Data Storage and Personalization",
+        "description": "Storing sent emails in Supabase to enable AI to learn user preferences and tailor future emails."
+      },
+      {
+        "title": "Self-Hosting and Docker Management",
+        "description": "Setting up n8n workflows in a self-hosted environment using Docker for reliability, scalability, and deployment management."
       }
     ],
+    demo: "#",
+    github: "#",
+    year: "2025",
+    image: "/images/project2/thumbnail.png",
+    gallery: ["/images/project2/1.png", "/images/project2/2.png", "/images/project2/3.png", "/images/project2/4.png", "/images/project2/5.png"
+    ]
+  },
+  {
+    "title": "DISKount Market — Product Management System",
+    "description": "A CodeIgniter learning project focused on product management, email integration, and API usage.",
+    "fullDescription": "DISKount Market is a fictional web-based product and inventory management system developed as a learning project while studying CodeIgniter, PHP, and backend integrations. The system includes product CRUD operations, user management, email notifications, and API-based features to simulate real-world development scenarios. Although the brand is made up, the project demonstrates practical skills in building structured, scalable web applications using the MVC architecture.",
+    "tech": ["CodeIgniter", "PHP", "MySQL", "XAMPP", "HTML", "CSS", "JavaScript", "Email API"],
+    "features": [
+      "Full product CRUD (Create, Read, Update, Delete)",
+      "Email notifications using integrated email API",
+      "User login, registration, and role-based access",
+      "Inventory and category tracking",
+      "MVC architecture for clean code structure",
+    ],
+    "challenges": [
+      {
+        "title": "Understanding CodeIgniter MVC",
+        "description": "Learning how controllers, models, and views interact to maintain clean, modular code."
+      },
+      {
+        "title": "Email API Integration",
+        "description": "Setting up email sending functionality for notifications such as account creation or updates."
+      },
+      {
+        "title": "REST API Usage",
+        "description": "Consuming external APIs and handling responses effectively within CodeIgniter."
+      },
+      {
+        "title": "Form Validation and Security",
+        "description": "Implementing secure input validation, preventing SQL injection, and sanitizing user inputs."
+      },
+      {
+        "title": "Database Design",
+        "description": "Structuring tables for products, categories, and users while maintaining relational integrity."
+      },
+      {
+        "title": "Routing and Navigation",
+        "description": "Configuring routes and controllers to manage multiple pages and CRUD operations smoothly."
+      }
+    ],  
     demo: "#",
     github: "#",
     year: "2024",
-    image: "PROJECT_2",
-    gallery: ["/placeholder.jpg", "/placeholder.jpg", "/placeholder.jpg", "/placeholder.jpg"]
+    image: "/images/project3/thumbnail.png",
+    gallery: ["/images/project3/1.png", "/images/project3/2.png", "/images/project3/3.png", "/images/project3/4.png", "/images/project3/5.png"
+    ]
   },
   {
-    title: "E-Commerce Dashboard",
-    description: "A comprehensive admin dashboard for managing products, orders, and analytics with real-time data synchronization.",
-    fullDescription: "A full-featured admin dashboard for e-commerce businesses with real-time analytics, inventory management, and order processing capabilities.",
-    tech: ["React", "Laravel", "PostgreSQL", "Chart.js"],
-    features: [
-      "Real-time sales analytics and reporting",
-      "Inventory management with low-stock alerts",
-      "Order processing and fulfillment tracking",
-      "Customer insights and behavior analytics"
+    "title": "Valley Hotel Website Design",
+    "description": "A modern and user-friendly hotel website UI designed for Valley Hotel in Tuguegarao City.",
+    "fullDescription": "A complete Figma UI/UX design for the official website of Valley Hotel located in Tuguegarao City, featuring an intuitive booking interface, room galleries, hotel amenities, and a clean modern layout designed for seamless user experience.",
+    "tech": ["Figma", "Design System", "Prototyping"],
+    "features": [
+      "Interactive room selection",
+      "Responsive web layout optimized for desktop and mobile",
+      "Component-based design system for scalable UI updates",
+      "High-quality room and amenities gallery layout",
+      "Clean and modern homepage highlighting hotel branding"
     ],
-    challenges: [
+    "challenges": [
       {
-        title: "Real-Time Data Updates",
-        description: "Implementing WebSocket connections for live dashboard updates while managing database query performance with large datasets."
+        "title": "Responsive Layout Challenges",
+        "description": "Adapting layouts for mobile and tablet without losing readability or aesthetic appeal, especially for text-heavy sections."
       },
       {
-        title: "Complex Data Relationships",
-        description: "Designing efficient database schema and queries to handle complex relationships between products, orders, and customers."
+        "title": "Brand Identity Consistency",
+        "description": "Ensuring the UI maintains Valley Hotel's branding through color palettes, typography, and visual hierarchy."
+      },
+      {
+        "title": "Creating Reusable Components",
+        "description": "Building a scalable component system with variants to make future updates easier and more efficient."
       }
     ],
-    demo: "#",
-    github: "#",
-    year: "2023",
-    image: "PROJECT_3",
-    gallery: ["/placeholder.jpg", "/placeholder.jpg", "/placeholder.jpg"]
-  },
+    "demo": "#",
+    "github": "#",
+    "year": "2024",
+    image: "/images/project4/thumbnail.png",
+    gallery: ["/images/project4/1.png", "/images/project4/2.png", "/images/project4/3.png", "/images/project4/4.png", "/images/project4/5.png"]
+  }  
 ]
 
 function Lightbox({ image, onClose }: { image: string; onClose: () => void }) {

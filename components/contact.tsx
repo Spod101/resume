@@ -18,7 +18,7 @@ export function Contact() {
   const y = useTransform(scrollYProgress, [0, 1], [100, -100])
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
 
-  const email = "your.email@example.com" // Replace with your actual email
+  const email = "claytondalet@gmail.com" 
 
   // Handle client-side mounting and time updates
   useEffect(() => {
@@ -36,7 +36,7 @@ export function Contact() {
     }
 
     updateTime()
-    const interval = setInterval(updateTime, 100) // Update every 100ms
+    const interval = setInterval(updateTime, 100)
 
     return () => clearInterval(interval)
   }, [])
