@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { TechMarquee as Scrolling } from '@/components/scrolling'
 import { Projects } from '@/components/projects'
+import { Services } from '@/components/services'
 import { Footer } from '@/components/footer'
 
 export default function Home() {
@@ -153,10 +154,18 @@ export default function Home() {
         </Link>
         <Link 
           href="#skills" 
-          onClick={(e) => handleNavClick(e, '#s kills')}
+          onClick={(e) => handleNavClick(e, '#skills')}
           className={`text-lg md:text-2xl font-bold ${navTextColor} hover:opacity-60 transition-all relative group/link pointer-events-auto`}
         >
           Skills
+          <span className={`absolute bottom-0 left-0 w-0 h-0.5 ${isInContactSection ? 'bg-white' : 'bg-foreground'} transition-all duration-300 group-hover/link:w-full`}></span>
+        </Link>
+        <Link 
+          href="#services" 
+          onClick={(e) => handleNavClick(e, '#services')}
+          className={`text-lg md:text-2xl font-bold ${navTextColor} hover:opacity-60 transition-all relative group/link pointer-events-auto`}
+        >
+          Services
           <span className={`absolute bottom-0 left-0 w-0 h-0.5 ${isInContactSection ? 'bg-white' : 'bg-foreground'} transition-all duration-300 group-hover/link:w-full`}></span>
         </Link>
         <Link 
@@ -263,6 +272,9 @@ export default function Home() {
       </section>
       <section id="skills">
         <Scrolling />
+      </section>
+      <section id="services">
+        <Services />
       </section>
       <Footer />
     </main>
