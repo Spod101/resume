@@ -48,7 +48,7 @@ export function Services() {
   const titleOpacity = useTransform(scrollYProgress, [0, 0.3], [0, 1])
 
   return (
-    <section ref={containerRef} className="relative min-h-screen py-24 md:py-32 bg-white overflow-hidden">
+    <section ref={containerRef} className="relative min-h-screen py-24 md:py-32 pb-48 md:pb-64 lg:pb-80 bg-white overflow-hidden">
       {/* Section Header */}
       <motion.div
         style={{ y: titleY, opacity: titleOpacity }}
