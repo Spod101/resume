@@ -113,11 +113,11 @@ const projects: Project[] = [
         "description": "Setting up n8n workflows in a self-hosted environment using Docker for reliability, scalability, and deployment management."
       }
     ],
-    demo: "#",
+    demo: "https://firs t-n8n-service.onrender.com",
     github: "#",
     year: "2025",
     image: "/images/project2/thumbnail.png",
-    gallery: ["/images/project2/1.png", "/images/project2/2.png", "/images/project2/3.png", "/images/project2/4.png", "/images/project2/5.png"
+    gallery: ["/images/project2/1.png", "/images/project2/2.png", "/images/project2/3.png", "/images/project2/4.png"
     ]
   },
   {
@@ -140,10 +140,6 @@ const projects: Project[] = [
       {
         "title": "Email API Integration",
         "description": "Setting up email sending functionality for notifications such as account creation or updates."
-      },
-      {
-        "title": "REST API Usage",
-        "description": "Consuming external APIs and handling responses effectively within CodeIgniter."
       },
       {
         "title": "Form Validation and Security",

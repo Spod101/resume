@@ -12,17 +12,15 @@ const services = [
       "Full-stack development",
       "Responsive design",
       "Performance optimization",
-      "SEO-friendly architecture"
     ]
   },
   {
     title: "AI Integration",
     description: "Implementing intelligent systems and automation using the latest AI technologies.",
     features: [
-      "ChatGPT & AI integration",
+      "OpenAI & Gemini AI integration",
       "Workflow automation",
       "Intelligent chatbots",
-      "Custom AI solutions"
     ]
   },
   {
