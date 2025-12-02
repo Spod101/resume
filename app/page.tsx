@@ -94,7 +94,7 @@ export default function Home() {
     e.preventDefault()
     const element = document.querySelector(sectionId)
     if (element) {
-      const offset = 0 // No offset - exact positioning
+      const offset = 0 
       const elementPosition = element.getBoundingClientRect().top
       const offsetPosition = elementPosition + window.pageYOffset - offset
       
@@ -200,7 +200,7 @@ export default function Home() {
                 }}
               >
                 <Image
-                  src="/images/profile.jpg"
+                  src="/images/profile.webp"
                   alt="Clayton"
                   fill
                   className="object-cover transition-all duration-700 group-hover:grayscale"
