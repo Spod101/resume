@@ -31,11 +31,57 @@ interface Project {
 
 const projects: Project[] = [
   {
+    "title": "Barangay AI",
+    "description": "A fully client-side AI chat app that runs on a local LLM \u2014 private, offline-capable and multilingual. Built at DEVCON.PH for camps and barangay-level digital literacy.",
+    "fullDescription": "A polished, fully client-side AI chat app built at DEVCON.PH to run on top of a local large language model, so anyone can have a private AI assistant without an account, a subscription or a connection. It was made for DEVCON camps and barangay-level digital literacy \u2014 the constraint being a camp laptop with no server, no cloud dependency and possibly no internet. It talks to any OpenAI-compatible endpoint (designed for Ollama on the same machine), keeps durable multi-session history in SQLite compiled to WebAssembly, grounds its answers in documents you upload, and shows exactly which chunk of which file it used to answer. There is no framework, no bundler and no build step \u2014 it is vanilla JavaScript with every dependency vendored, so it keeps working with the internet unplugged.",
+    "tech": [
+      "Vanilla JavaScript",
+      "Ollama (Local LLMs)",
+      "sql.js \u2014 SQLite in WebAssembly",
+      "IndexedDB",
+      "BM25 Retrieval (RAG)",
+      "pdf.js & mammoth.js",
+      "Service Worker",
+      "Vercel"
+    ],
+    "features": [
+      "Runs against any OpenAI-compatible endpoint, designed for Ollama on your own machine",
+      "Fully offline-capable through vendored libraries and service worker precaching",
+      "Durable multi-session conversation history in SQLite (sql.js + IndexedDB)",
+      "Answers in English, Filipino, Taglish, Bisaya, Hiligaynon or Ilocano",
+      "Document grounding from .txt, .md, .json, .csv, .log, .pdf and .docx uploads",
+      "Source transparency: shows the retrieval chunks, similarity scores and the literal prompt sent",
+      "Customizable AI persona with tone options and system prompt control",
+      "Optional web search through the Tavily API",
+      "Dark mode, markdown rendering, streaming responses and context statistics",
+      "No framework, no bundler, no build step"
+    ],
+    "challenges": [
+      {
+        "title": "Retrieval Without an Embedding Model",
+        "description": "Document grounding normally needs an embedding model, which means another multi-gigabyte download and more compute than a camp laptop has to spare. Retrieval is done with BM25 keyword scoring instead, so uploaded documents are searchable with nothing extra to install and no second model competing for memory."
+      },
+      {
+        "title": "Durable History With No Server and No Account",
+        "description": "Conversations had to survive a reload without anywhere to store them. SQLite compiled to WebAssembly, persisted through IndexedDB, gives real multi-session history entirely inside the browser \u2014 no backend, no sign-up, and nothing leaving the device."
+      },
+      {
+        "title": "Offline For Real, Not Just Cached",
+        "description": "Claiming offline support means every dependency has to be vendored rather than pulled from a CDN, and precached by a service worker. Once loaded, the app runs with the internet unplugged; the only thing it needs is the model on localhost."
+      }
+    ],
+    demo: "https://barangay-ai.vercel.app",
+    github: "https://github.com/DEVCONC4/barangayAI",
+    year: "2026",
+    image: ""
+  },
+  {
     "title": "EternalpEASE",
     "description": "EternalpEASE is a comprehensive web-based platform with AI that translates user inquiries into personalized visual theme recommendations, featuring integrated payments.",
     "fullDescription": "EternalpEASE is a comprehensive web-based platform designed to support Infinity Memorial Chapels and Funeral Services in providing a more organized, compassionate, and efficient funeral planning experience. The system integrates an AI-powered inquiry and theme recommendation assistant that understands user needs, offers guidance, and generates visual funeral theme concepts through DALL·E.",
     "tech": [
       "Laravel (Backend API & Orchestration)",
+      "Inertia.js (Laravel-React Bridge)",
       "React (Frontend Interface)",
       "OpenAI API (GPT-4 & DALL-E 3)",
       "PayMongo (Payment Processing)",
@@ -67,17 +113,120 @@ const projects: Project[] = [
       }
     ],
     demo: "https://eternalpease.xyz",
-    github: "#",
+    github: "",
     year: "2025",
     image: "/images/project1/thumbnail.png",
     gallery: ["/images/project1/1.png", "/images/project1/2.png", "/images/project1/3.png", "/images/project1/4.png", "/images/project1/5.png"
     ]
   },
   {
+    "title": "DevieBot",
+    "description": "Task management inside Telegram for distributed teams \u2014 plain-language task capture parsed by Claude, backed by a real-time Kanban dashboard.",
+    "fullDescription": "Teams talk in Telegram but track their work somewhere else, so every task costs a context switch. DevieBot removes it by putting task management inside the chat: /addtask takes plain language and Claude Haiku extracts the title, deadline, priority and assignee, defaulting undated work to the nearest Tuesday or Thursday. A cron-triggered endpoint runs the daily standup and produces an AI summary of everyone\u2019s responses. Behind the chat sits a real-time Kanban dashboard \u2014 Backlog, To Do, In Progress, In Review, Blocked and Done \u2014 with drag-and-drop reordering for the people who need deeper visibility, and every administrative action is written to an audit log. Built around bootcamp cohorts who live in Telegram, with operations managers, leads and project managers as the other three personas.",
+    "tech": [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Supabase (PostgreSQL + RLS)",
+      "Claude Haiku (Anthropic API)",
+      "Telegram Bot API",
+      "Tailwind CSS & shadcn/ui",
+      "@dnd-kit",
+      "Vercel"
+    ],
+    "features": [
+      "/addtask turns plain language into a structured task",
+      "Claude Haiku extracts title, deadline, priority and assignee",
+      "Undated work defaults to the nearest Tuesday or Thursday",
+      "Daily standups triggered by an external cron scheduler",
+      "AI summary of all standup responses",
+      "Real-time Kanban across Backlog, To Do, In Progress, In Review, Blocked and Done",
+      "Drag-and-drop reordering on the board",
+      "Audit logging on every administrative action",
+      "Custom Telegram webhook handler rather than a bot framework",
+      "Row-level security in Supabase"
+    ],
+    "challenges": [
+      {
+        "title": "Free Text That Has To Land in a Database",
+        "description": "A task typed into a chat is a sentence, not a form. The NLP layer has to pull a title, deadline, priority and assignee out of whatever someone types and commit it as structured data \u2014 including deciding what an unstated deadline means, which is why undated work falls to the nearest Tuesday or Thursday rather than being rejected."
+      },
+      {
+        "title": "Two Interfaces, One Source of Truth",
+        "description": "The bot and the dashboard are the same data seen from different places. A task created in Telegram has to appear on the board, and a card dragged on the board has to be the same task the bot reports \u2014 which is what the real-time layer and row-level security in Supabase are holding together."
+      }
+    ],
+    demo: "",
+    github: "https://github.com/DEVCONC4/DevieBot",
+    year: "2026",
+    image: ""
+  },
+  {
+    "title": "Code Camp Checklist",
+    "description": "Codelabs crossed with Google Forms \u2014 a 19-step guided workshop app with proof capture and a live facilitator desk. Built for the Barangay AI Code Camp.",
+    "fullDescription": "The companion app for the Barangay AI Code Camp, a three-hour hands-on workshop where participants build and deploy a local AI system. It is codelabs crossed with Google Forms: participants work through 19 sequential steps, each unlocking only once its required proofs are in \u2014 a text answer, a multiple choice, a longer note or a screenshot. Facilitators get a desk view of the whole room: live alerts for exposed API keys, CORS errors and offline browsers, a quiet column ranked by time since someone last edited anything, a per-step completion chart and individual record sheets with screenshots and links. Participants leave with two exports, a portfolio-ready project document and a plain progress report, and Postgres row-level security keeps each participant to their own data while facilitators see everyone.",
+    "tech": [
+      "Vite",
+      "Vanilla JavaScript",
+      "Supabase (PostgreSQL, Auth, Storage)",
+      "Row-Level Security",
+      "Vercel"
+    ],
+    "features": [
+      "19 sequential steps that unlock only once required proofs are submitted",
+      "Proof types: text, long text, multiple choice and screenshots",
+      "Facilitator desk with live alerts for exposed API keys, CORS errors and offline browsers",
+      "Quiet column ranked by time since last edit",
+      "Per-step completion bar chart",
+      "Individual participant record sheets with screenshots and links",
+      "Table groups with auto-generated codes",
+      "Portfolio-ready project document export",
+      "Progress report export, plus an Excel sheet for facilitators",
+      "Row-level security so participants see only their own data"
+    ],
+    "challenges": [
+      {
+        "title": "Spotting Trouble Before a Hand Goes Up",
+        "description": "In a three-hour camp, a participant stuck on a CORS error can lose the whole session before they think to ask. The facilitator desk watches for the failures this workshop actually produces \u2014 exposed API keys, CORS errors, offline browsers \u2014 and ranks a quiet column by time since last edit, so someone can be reached before they fall behind."
+      },
+      {
+        "title": "One Database, Two Audiences",
+        "description": "Participants and facilitators use the same tables but must not see the same rows. Row-level security draws that line in Postgres rather than in the UI, so a participant sees only their own submissions while a facilitator sees the room."
+      }
+    ],
+    demo: "https://bai-codecamp-checklist.vercel.app",
+    github: "https://github.com/DEVCONC4/codecamp-checklist",
+    year: "2026",
+    image: ""
+  },
+  {
+    "title": "Task Management System with AI Integration",
+    "description": "A full-stack MERN task manager with AI-assisted prioritization, using the OpenAI API to recommend priority order and next actions.",
+    "fullDescription": "A full-stack task management system built on the MERN stack with AI-assisted task prioritization and workflow suggestions. Rather than leaving users to triage their own backlog, the system sends task context to the OpenAI API, which analyses the work and returns a recommended priority order along with the next actions to take.",
+    "tech": ["MongoDB", "Express", "React", "Node.js", "OpenAI API"],
+    "features": [
+      "Full-stack task management on the MERN stack",
+      "AI-assisted task prioritization",
+      "AI-generated workflow suggestions",
+      "OpenAI API analyses tasks and recommends a priority order",
+      "Next-action recommendations derived from user input"
+    ],
+    "challenges": [
+      {
+        "title": "Turning Free-Form Input Into Ranked Priorities",
+        "description": "Getting the OpenAI API to read loosely written task descriptions and return a consistently ordered priority list with actionable next steps, rather than generic advice."
+      }
+    ],
+    demo: "",
+    github: "",
+    year: "2026",
+    image: ""
+  },
+  {
     "title": "AI-Powered Personalized Email Automation via Telegram",
     "description": "A Telegram chatbot and AI-driven workflow that generates professional, tailored emails from brief user inputs and sends them automatically.",
     "fullDescription": "This project combines n8n, AI, and Telegram to automate professional email composition and delivery. Users interact with a Telegram chatbot by providing minimal inputs—the recipient's name, email address, subject, and a short context. The AI then constructs a formal, detailed email based on the provided context. Users can review the generated email and either approve it for sending or request a reconstruction. Sent emails are stored in Supabase, enabling the AI to learn the user's style over time for increasingly personalized outputs. This project showcases practical experience in workflow automation, AI integration, prompt engineering, API management, and chatbot development.",
-    "tech": ["n8n", "Telegram Bot API", "Google AI API", "Email API", "Supabase", "Docker", "JavaScript", "JSON"],
+    "tech": ["n8n", "Telegram Bot API", "Google Gemini API", "Email API", "Supabase", "Docker", "JavaScript", "JSON"],
     "features": [
       "Telegram chatbot interface for user input",
       "AI-powered email drafting from minimal context",
@@ -113,8 +262,8 @@ const projects: Project[] = [
         "description": "Setting up n8n workflows in a self-hosted environment using Docker for reliability, scalability, and deployment management."
       }
     ],
-    demo: "https://firs t-n8n-service.onrender.com",
-    github: "#",
+    demo: "https://first-n8n-service.onrender.com",
+    github: "",
     year: "2025",
     image: "/images/project2/thumbnail.png",
     gallery: ["/images/project2/1.png", "/images/project2/2.png", "/images/project2/3.png", "/images/project2/4.png"
@@ -154,22 +303,48 @@ const projects: Project[] = [
         "description": "Configuring routes and controllers to manage multiple pages and CRUD operations smoothly."
       }
     ],  
-    demo: "#",
-    github: "#",
+    demo: "",
+    github: "",
     year: "2024",
     image: "/images/project3/thumbnail.png",
     gallery: ["/images/project3/1.png", "/images/project3/2.png", "/images/project3/3.png", "/images/project3/4.png", "/images/project3/5.png"
     ]
   },
   {
+    "title": "ITSO Dispensing System",
+    "description": "A full-stack borrowing and dispensing system for school IT equipment, covering the request, release and return workflows.",
+    "fullDescription": "A full-stack borrowing and dispensing system for school IT equipment such as cables, monitors, mice and iPads, covering the full request, release and return workflow. Built with CodeIgniter, PHP and MySQL, with a server-rendered UI and a schema designed to track item availability and borrower history so shared equipment can never be double-booked.",
+    "tech": ["CodeIgniter", "PHP", "MySQL"],
+    "features": [
+      "Request, release and return workflows for shared equipment",
+      "Inventory covering cables, monitors, mice and iPads",
+      "Item availability tracking",
+      "Borrower history per item",
+      "Server-rendered UI on a purpose-built MySQL schema"
+    ],
+    "challenges": [
+      {
+        "title": "Preventing Double-Booking of Shared Equipment",
+        "description": "Designing the MySQL schema so item availability and borrower history are tracked accurately enough to stop the same piece of equipment being promised to two people at once."
+      }
+    ],
+    demo: "",
+    github: "",
+    year: "2024",
+    image: ""
+  },
+  {
     "title": "Valley Hotel Website Design",
     "description": "A modern and user-friendly hotel website UI designed for Valley Hotel in Tuguegarao City.",
-    "fullDescription": "A complete Figma UI/UX design for the official website of Valley Hotel located in Tuguegarao City, featuring an intuitive booking interface, room galleries, hotel amenities, and a clean modern layout designed for seamless user experience.",
+    "fullDescription": "A complete Figma UI/UX design for the official website of Valley Hotel in Tuguegarao City, spanning 10 pages: an intuitive booking interface, room galleries, hotel amenities and a clean modern layout. Built as a component-based design system with shared assets so layouts stay consistent with the hotel\u2019s brand standards, with wireframes, prototypes and high-fidelity mockups across desktop and mobile breakpoints, handed off to implementation as developer-ready specs. Delivered as Clayton\u2019s UI/UX Designer engagement with the hotel, coordinated over Slack and tracked in Trello.",
     "tech": ["Figma", "Design System", "Prototyping"],
     "features": [
+      "10 designed pages covering the full booking journey",
       "Interactive room selection",
       "Responsive web layout optimized for desktop and mobile",
-      "Component-based design system for scalable UI updates",
+      "Component-based design system with shared assets for scalable UI updates",
+      "Wireframes, prototypes and high-fidelity mockups per breakpoint",
+      "Developer-ready specs and breakpoint behaviour for handoff",
       "High-quality room and amenities gallery layout",
       "Clean and modern homepage highlighting hotel branding"
     ],
@@ -192,8 +367,11 @@ const projects: Project[] = [
     "year": "2024",
     image: "/images/project4/thumbnail.png",
     gallery: ["/images/project4/1.png", "/images/project4/2.png", "/images/project4/3.png", "/images/project4/4.png", "/images/project4/5.png"]
-  }  
+  }
 ]
+  // Newest first. Sorted here rather than by hand so the order stays right when
+  // a project is added or a year corrected. Ties keep their written order.
+  .sort((a, b) => parseInt(b.year, 10) - parseInt(a.year, 10))
 
 function Lightbox({ image, onClose }: { image: string; onClose: () => void }) {
   return (
@@ -353,7 +531,7 @@ function ProjectModal({ project, open, onOpenChange }: {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent 
-        className="max-w-4xl max-h-[95vh] sm:max-h-[90vh] bg-transparent border-none p-0 gap-0 overflow-hidden w-[95vw] sm:w-full"
+        className="max-w-none! w-screen h-screen max-h-screen rounded-none sm:w-[96vw] sm:h-[94vh] sm:max-h-[94vh] sm:rounded-2xl bg-transparent border-none p-0 gap-0 overflow-hidden"
         showCloseButton={false}
       >
         <button
@@ -377,12 +555,13 @@ function ProjectModal({ project, open, onOpenChange }: {
           </svg>
         </button>
 
-        <div className="max-h-[95vh] sm:max-h-[90vh] overflow-y-auto custom-scrollbar">
+        <div className="h-full overflow-y-auto custom-scrollbar">
           <SpotlightCard 
-            className="w-full !p-4 sm:!p-6 md:!p-8"
+            className="w-full min-h-full !p-4 sm:!p-6 md:!p-8 lg:!p-10"
             spotlightColor="rgba(255, 255, 255, 0.15)"
           >
-          <div className="space-y-6 sm:space-y-8">
+          <div className="mx-auto w-full max-w-[1400px] space-y-6 sm:space-y-8 lg:grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:items-start lg:gap-10 lg:space-y-0">
+            <div className="space-y-6 sm:space-y-8">
             {project.gallery && project.gallery.length > 0 && (
               <StackedCardsGallery images={project.gallery} />
             )}
@@ -413,6 +592,10 @@ function ProjectModal({ project, open, onOpenChange }: {
               </div>
             </div>
 
+            </div>
+
+            <div className="space-y-6 sm:space-y-8">
+            {project.features.length > 0 && (
             <div className="bg-white/5 p-4 sm:p-6 rounded-lg border border-white/10">
               <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-5 flex items-center gap-2 text-white">
                 <span className="text-xl sm:text-2xl">+</span> Key Features
@@ -426,7 +609,9 @@ function ProjectModal({ project, open, onOpenChange }: {
                 ))}
               </ul>
             </div>
+            )}
 
+            {project.challenges.length > 0 && (
             <div className="space-y-4 sm:space-y-5">
               <div className="flex items-center gap-2">
                 <div className="w-1 h-4 sm:h-5 bg-white/80"></div>
@@ -443,6 +628,7 @@ function ProjectModal({ project, open, onOpenChange }: {
                 ))}
               </div>
             </div>
+            )}
 
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 pt-4 sm:pt-6 border-t border-white/10">
               {project.demo && (
@@ -473,6 +659,7 @@ function ProjectModal({ project, open, onOpenChange }: {
                   View Code
                 </a>
               )}
+            </div>
             </div>
           </div>
         </SpotlightCard>

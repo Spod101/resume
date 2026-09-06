@@ -152,6 +152,10 @@ export function Contact() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mb-12 md:mb-16"
         >
+          <p className="font-mono text-[10px] md:text-xs tracking-[0.3em] text-white/50 mb-5 md:mb-6">
+            METRO MANILA, PHILIPPINES
+          </p>
+
           <motion.button
             onClick={handleCopyEmail}
             whileHover={{ scale: 1.05 }}

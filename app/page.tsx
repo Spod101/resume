@@ -113,7 +113,7 @@ export default function Home() {
     <main className="min-h-screen bg-white">
       <button
         onClick={scrollToTop}
-        className={`fixed bottom-12 right-6 md:bottom-18 md:right-8 z-50 bg-black text-white p-3 md:p-4 rounded-full shadow-lg hover:bg-gray-800 transition-all duration-300 ${
+        className={`scroll-top-fab fixed bottom-28 right-6 md:bottom-34 md:right-8 z-50 bg-black text-white p-3 md:p-4 rounded-full shadow-lg hover:bg-gray-800 transition-all duration-300 ${
           showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'
         }`}
         aria-label="Scroll to top"
@@ -236,7 +236,7 @@ export default function Home() {
                   }}
                 >
                   <p className="text-base md:text-xl text-muted-foreground">
-                    Web Developer
+                    Fullstack Developer &amp; AI Engineer
                   </p>
                 </div>
 
@@ -298,7 +298,7 @@ export default function Home() {
                       transition: 'transform 0.5s ease-out 0.1s'
                     }}
                   >
-                    A Web Developer
+                    Fullstack Developer &amp; AI Engineer
                   </p>
                   <p 
                     className="text-xs md:text-base lg:text-lg text-gray-700 leading-relaxed"
@@ -307,7 +307,7 @@ export default function Home() {
                       transition: 'transform 0.5s ease-out 0.2s'
                     }}
                   >
-                    Skilled in designing and developing responsive websites and mobile apps and deeply interested in AI automation and generative AI, exploring how intelligent systems can enhance workflows and user experiences. Motivated to contribute to innovative, forward-thinking projects and grow within a dynamic development team.
+                    A fullstack developer and AI engineer based in Metro Manila. Most recently at DEVCON Philippines, where I took the DEVCON+ app from MVP to production &mdash; re-architecting its React front end and services to reliably serve 1,000+ concurrent users, up from a breaking point of around 40. I build with React, TypeScript, Laravel and Node.js, and work hands-on with LLMs, AI agent orchestration and n8n automation.
                   </p>
                 </div>
               </div>
